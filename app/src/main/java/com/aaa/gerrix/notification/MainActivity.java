@@ -82,11 +82,12 @@ public class MainActivity extends AppCompatActivity {
                         getString(R.string.no),
                         PendingIntent.getActivity(this, 0, noIntent, PendingIntent.FLAG_UPDATE_CURRENT)));
 
-        update(null);
+        update(null, -1);
     }
 
-    private void update(String text) {
+    private void update(String text, int index) {
         if (!firstTime){
+            notification.mActions.get(index).title = text.toUpperCase();
             notification.setContentTitle(text + " clicked!");
         }
         notificationManager.notify(NOTIFY_ID, notification.build());
@@ -103,15 +104,15 @@ public class MainActivity extends AppCompatActivity {
         if (intent.getAction() != null) {
             switch (intent.getAction()) {
                 case YES_ACTION:
-                    update("Yes");
+                    update("Yes", 0);
                     Toast.makeText(this, "Yes :)", Toast.LENGTH_SHORT).show();
                     break;
                 case MAYBE_ACTION:
-                    update("Maybe");
+                    update("Maybe", 1);
                     Toast.makeText(this, "Maybe :|", Toast.LENGTH_SHORT).show();
                     break;
                 case NO_ACTION:
-                    update("No");
+                    update("No", 2);
                     Toast.makeText(this, "No :(", Toast.LENGTH_SHORT).show();
                     break;
             }
